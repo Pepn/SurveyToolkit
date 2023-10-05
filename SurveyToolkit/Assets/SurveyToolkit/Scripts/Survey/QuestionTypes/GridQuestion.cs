@@ -80,7 +80,7 @@ public class GridQuestion : Question
 
     void Start()
     {
-        questionObject.GetComponent<TextMeshProUGUI>().text = GetData().question;
+        questionObject.GetComponent<TextMeshProUGUI>().text = GetData().question + this.AddRequiredOptionalStar;
 
         //toprow of columns
         GameObject topRowObj = Instantiate(TopRowPrefab, answerObject.transform);

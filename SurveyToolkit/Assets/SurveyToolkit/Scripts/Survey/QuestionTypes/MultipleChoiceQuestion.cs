@@ -10,7 +10,7 @@ public class MultipleChoiceQuestion : Question
     // Start is called before the first frame update
     void Start()
     {
-        questionObject.GetComponent<TextMeshProUGUI>().text = GetData().question;
+        questionObject.GetComponent<TextMeshProUGUI>().text = GetData().question + this.AddRequiredOptionalStar;
         foreach (string answer in (GetData() as MultipleChoiceQuestionData).Answers)
         {
             GameObject optionObj = Instantiate(optionPrefab, answerObject.transform);

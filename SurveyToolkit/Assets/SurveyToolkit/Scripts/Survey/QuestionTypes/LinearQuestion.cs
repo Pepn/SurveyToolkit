@@ -30,7 +30,7 @@ public class LinearQuestion : Question
 
     void Start()
     {
-        questionObject.GetComponent<TextMeshProUGUI>().text = GetData().question;
+        questionObject.GetComponent<TextMeshProUGUI>().text = GetData().question + this.AddRequiredOptionalStar;
         foreach (string answer in (GetData() as LinearQuestionData).Answers)
         {
             GameObject optionObj = Instantiate(optionPrefab, answerObject.transform);

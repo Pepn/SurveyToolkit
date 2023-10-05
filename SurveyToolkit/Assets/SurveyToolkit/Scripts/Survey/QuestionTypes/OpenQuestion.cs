@@ -11,7 +11,7 @@ public class OpenQuestion : Question
     // Start is called before the first frame update
     void Start()
     {
-        questionObject.GetComponent<TextMeshProUGUI>().text = (GetData() as OpenQuestionData).question;
+        questionObject.GetComponent<TextMeshProUGUI>().text = (GetData() as OpenQuestionData).question + this.AddRequiredOptionalStar; 
 
         answerField = GetComponentInChildren<TMP_InputField>();
     }

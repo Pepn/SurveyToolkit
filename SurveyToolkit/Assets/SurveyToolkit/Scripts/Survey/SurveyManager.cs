@@ -63,24 +63,10 @@ public class SurveyManager : MonoBehaviour
             page.gameObject.SetActive(false);
             Pages[currentIndex + 1].gameObject.SetActive(true);
         }
-
-        if (IsPageNonQuestions(Pages[currentIndex+1]))
+        else
         {
-            //SubmitQuestionnaire();
+            SubmitQuestionnaire();
         }
-    }
-
-    private bool IsPageNonQuestions(QuestionnairePage page)
-    {
-        //assumes an empty page 3 without questions
-        foreach (FormObjectData formData in page.formData)
-        {
-            if (formData is QuestionData)
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
     void SubmitQuestionnaire()

@@ -13,4 +13,6 @@ public abstract class Question : FormObject
     public virtual QuestionData GetData() => Data;
     public virtual void SetData(QuestionData qd) => Data = qd;
     public abstract List<GameObject> GetInCompletedForms();
+
+    public string AddRequiredOptionalStar => Data.required == true ? "<color=\"red\">*</color>" : "";
 }

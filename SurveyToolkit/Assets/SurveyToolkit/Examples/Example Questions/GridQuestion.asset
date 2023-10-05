@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e72b460efb6884289ea03cbb195a98, type: 3}
+  m_Name: GridQuestion
+  m_EditorClassIdentifier: 
+  QuestionPrefab: {fileID: 688389562860678021, guid: c643e979991033e44b32752e5e6ac41f, type: 3}
+  question: How much did you like the following aspects of the game?
+  required: 1
+  Questions:
+  - Introduction
+  - Storyline
+  - Tutorial
+  - Ending
+  - Controls
+  ColumnNames:
+  - Strongly Dislike
+  - Dislike
+  - Neutral
+  - Like
+  - Strongly Like

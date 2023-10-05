@@ -1,29 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.Linq;
-using System.Text;
-using System;
 using UnityEngine.UI;
-using System.IO;
-using System.Net;
 using TMPro;
 
+/// <summary>
+/// Defines a single page for the survey manager, is built of formObjects.
+/// </summary>
 public class QuestionnairePage : MonoBehaviour
 {
     private SurveyManager surveyManager;
-    public List<FormObject> formObjects = new List<FormObject>();
+    public List<FormObject> formObjects { get; private set; } = new List<FormObject>();
     public List<FormObjectData> formData = new List<FormObjectData>();
     [SerializeField] private Transform container;
-    [SerializeField] private GameObject submitForm;
-
     private List<GameObject> inCompleteQuestions = new List<GameObject>();
     private List<Color> inCompleteQuestionsDefaultColor = new List<Color>();
 
     void Start()
     {
-        surveyManager = transform.parent.GetComponent<SurveyManager>();
+        // get the survey manager
+        surveyManager = FindObjectOfType<SurveyManager>();
+
         foreach (FormObjectData formData in formData)
         {
             if (formData is QuestionData)
@@ -41,42 +38,59 @@ public class QuestionnairePage : MonoBehaviour
                 infoForm.SetData(ifd);
                 formObjects.Add(infoForm);
             }
+
+            if (formData is SubmitFormData)
+            {
+                SubmitFormData sfd = formData as SubmitFormData;
+                SubmitForm submitForm = Instantiate(sfd.InfoFormPrefab, container).GetComponent<SubmitForm>();
+                formObjects.Add(submitForm);
+
+                submitForm.transform.SetAsLastSibling();
+                submitForm.GetComponentInChildren<Button>()?.onClick.AddListener(() => SubmitPage(submitForm));
+
+                SetSubmitFormData(submitForm);
+            }
         }
-
-        submitForm.transform.SetAsLastSibling();
-
-        if (surveyManager == null)
-            return;
-
-        submitForm.GetComponentInChildren<Button>()?.onClick.AddListener(() => SubmitPage());
-        UpdateSubmitForm();
-
     }
 
-    // Update is called once per frame
+    // Rebuilds the layout; fixes some weird autoscaling issues.
     void Update()
     {
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponentInChildren<Transform>() as RectTransform);
     }
 
-    void UpdateSubmitForm()
+    void SetSubmitFormData(SubmitForm submitForm)
     {
-        if(surveyManager.Pages.IndexOf(this) < surveyManager.Pages.Count - 2)
+        if(surveyManager.Pages.IndexOf(this) < surveyManager.Pages.Count - 1)
         {
-            submitForm.GetComponentInChildren<TextMeshProUGUI>().text = "Continue on the next Page..";
-            submitForm.GetComponentInChildren<Button>().GetComponentInChildren<TextMeshProUGUI>().text = "Next Page";
+            submitForm.title.text = "Continue on the next Page..";
+            submitForm.buttonText.text = "Next Page";
+        }
+        else
+        {
+            submitForm.title.text = "Survey Complete!";
+            submitForm.buttonText.text = "Submit";
         }
     }
 
-    void SubmitPage()
+    void SubmitPage(SubmitForm submitForm)
     {
+        // update the form colors to their default
         ResetFormColors();
 
+        // get all forms that are required
         foreach (Question q in formObjects.OfType<Question>())
         {
+            // skip non required questions
+            if (!q.GetData().required)
+            {
+                continue;
+            }
+
             inCompleteQuestions.AddRange(q.GetInCompletedForms());
         }
 
+        // color them red
         if (surveyManager.MustCompleteAllQuestions && inCompleteQuestions.Count != 0)
         {
             foreach (GameObject obj in inCompleteQuestions)
@@ -89,9 +103,9 @@ public class QuestionnairePage : MonoBehaviour
             return;
         }
 
-        //Debug.Log("Go next apge.. ");
         surveyManager.GoNextPage(this);
     }
+
     private void ResetFormColors()
     {
         //remove red color from colored objects
@@ -102,6 +116,5 @@ public class QuestionnairePage : MonoBehaviour
 
         inCompleteQuestions.Clear();
         inCompleteQuestionsDefaultColor.Clear();
-
     }
 }

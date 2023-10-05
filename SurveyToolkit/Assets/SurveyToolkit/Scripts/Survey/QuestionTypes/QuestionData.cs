@@ -7,4 +7,5 @@ public abstract class QuestionData : FormObjectData
 {
     [SerializeField] public GameObject QuestionPrefab;
     public string question;
+    public bool required = true;
 }
