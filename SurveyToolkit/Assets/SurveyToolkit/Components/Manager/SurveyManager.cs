@@ -52,7 +52,10 @@ public class SurveyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TestUpload();
+        }
     }
 
     public void GoNextPage(QuestionnairePage page)
@@ -79,6 +82,17 @@ public class SurveyManager : MonoBehaviour
             DataUploader.Instance.uploadLink = UploadLink;
             DataUploader.Instance.UploadFile(file);
         }
+    }
+
+    public void TestUpload()
+    {
+        DataUploader.Instance.uploadLink = UploadLink;
+
+        string filename = $"id_.csv";
+        string path = Path.Combine(Application.persistentDataPath, filename);
+        File.WriteAllText(path, "Testu");
+
+        DataUploader.Instance.UploadFile(path);
     }
 
     private string SaveStringToFile()

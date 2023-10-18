@@ -3,53 +3,40 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// Data uploader, takes a path to a file and tries to upload it to the uploadLink.
+/// </summary>
 public class DataUploader : Singleton<DataUploader>
 {
     [Tooltip("Full link to getFile.php")]
     public string uploadLink;
-    public enum UploadStatus
-    {
-        notStarted,
-        started,
-        successful,
-        error,
-        completed
-    }
-    public UploadStatus uploadStatus;
-
-    public void Start()
-    {
-        uploadStatus = UploadStatus.notStarted;
-
-        //UploadFile();
-    }
 
     public void UploadFile(string file)
     {
-        //Debug.Log("Start uploading File..");
         StartCoroutine(Upload(file));
     }
 
     IEnumerator Upload(string file)
     {
-        uploadStatus = UploadStatus.started;
-
-        string path = file;// Path.Combine(Application.persistentDataPath, "results", "Test.csv");
-        //Debug.Log("Uploading File to Path: " + path);
+        string path = file;
+        Debug.Log("Uploading File from Path: " + path);
         WWWForm form = new WWWForm();
         byte[] dataFile = File.ReadAllBytes(path);
         form.AddBinaryData("dataFile", dataFile, System.IO.Path.GetFileName(path));
         UnityWebRequest req = UnityWebRequest.Post(uploadLink, form);
+
         yield return req.SendWebRequest();
 
-        uploadStatus = UploadStatus.completed;
-
-        Debug.Log("SERVER: " + req.downloadHandler.text); // server response
+        Debug.Log("Server Response: " + req.downloadHandler.text); 
 
         if (req.result == UnityWebRequest.Result.ProtocolError || req.result == UnityWebRequest.Result.ConnectionError || !(req.downloadHandler.text.Contains("FILE OK")))
-            uploadStatus = UploadStatus.error;
+        {
+            Debug.Log("File Upload Succesful!");
+        }
         else
-            uploadStatus = UploadStatus.successful;
+        {
+            Debug.Log("File Upload Failed..");
+        }
 
         yield break;
     }
