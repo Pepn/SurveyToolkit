@@ -1,5 +1,13 @@
 # SurveyToolkit
 
+- The SurveyToolkit supports the follow question types: Open, Linear, Grid, and Multiple Choice.
+
+## Documentation
+The SurveyManager contains QuestionnairePages which handle most of the logic for each page. The pages contain a list of FormObjectData (ScriptableObjects) where a FormObjectData could either a question, a submit button or some infobox. Every question is a prefab variant of the original QuestionForm, if you want to change the layout change this prefab. The FormObjectData must have a reference to the prefab, this way the QuestionnairePage knows which and how to instantiate the prefab. The Survey is populated at runtime, so press play to inspect your survey.
+To create new questions right click in the Project > Create > SurveyToolkit > QuestionType. Or just copy and edit the example questions.
+
+## Example
+The SampleScene shows a simple 2 page survey
 
 ## Data
 The data is stored as .csv files in the [persistant storage](https://docs.unity3d.com/ScriptReference/Application-persistentDataPath.html) of the device. It is also possible to upload the data to a server.
