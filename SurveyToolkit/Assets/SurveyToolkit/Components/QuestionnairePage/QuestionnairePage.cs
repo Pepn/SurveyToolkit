@@ -4,117 +4,134 @@ using System.Linq;
 using UnityEngine.UI;
 using TMPro;
 
-/// <summary>
-/// Defines a single page for the survey manager, is built of formObjects.
-/// </summary>
-public class QuestionnairePage : MonoBehaviour
+namespace SurveyToolkit
 {
-    private SurveyManager surveyManager;
-    public List<FormObject> formObjects { get; private set; } = new List<FormObject>();
-    public List<FormObjectData> formData = new List<FormObjectData>();
-    [SerializeField] private Transform container;
-    private List<GameObject> inCompleteQuestions = new List<GameObject>();
-    private List<Color> inCompleteQuestionsDefaultColor = new List<Color>();
-
-    void Start()
+    /// <summary>
+    /// Defines a single page for the survey manager, is built of formObjects.
+    /// </summary>
+    public class QuestionnairePage : MonoBehaviour
     {
-        // get the survey manager
-        surveyManager = FindObjectOfType<SurveyManager>();
+        private SurveyManager surveyManager;
+        public List<FormObject> formObjects { get; private set; } = new List<FormObject>();
+        public List<FormObjectData> formData = new List<FormObjectData>();
+        private Transform container;
+        private List<GameObject> inCompleteQuestions = new List<GameObject>();
+        private List<Color> inCompleteQuestionsDefaultColor = new List<Color>();
 
-        foreach (FormObjectData formData in formData)
+        private void Awake()
         {
-            if (formData is QuestionData)
+            container = transform.GetChild(0).transform;
+            surveyManager = FindObjectOfType<SurveyManager>();
+        }
+
+        void Start()
+        {
+            LoadPage();
+        }
+
+        // loads all the questions and instantiates the correct prefabs
+        public void LoadPage()
+        {
+            foreach (FormObjectData formData in formData)
             {
-                QuestionData qd = formData as QuestionData;
-                Question q = Instantiate(qd.QuestionPrefab, container).GetComponent<Question>();
-                q.SetData(qd);
-                formObjects.Add(q);
+                if (formData is QuestionData)
+                {
+                    QuestionData qd = formData as QuestionData;
+                    Question q = Instantiate(qd.QuestionPrefab, container).GetComponent<Question>();
+                    q.SetData(qd);
+                    formObjects.Add(q);
+                }
+
+                if (formData is InfoFormData)
+                {
+                    InfoFormData ifd = formData as InfoFormData;
+                    InfoForm infoForm = Instantiate(ifd.InfoFormPrefab, container).GetComponent<InfoForm>();
+                    infoForm.SetData(ifd);
+                    formObjects.Add(infoForm);
+                }
+
+                if (formData is SubmitFormData)
+                {
+                    SubmitFormData sfd = formData as SubmitFormData;
+                    SubmitForm submitForm = Instantiate(sfd.InfoFormPrefab, container).GetComponent<SubmitForm>();
+                    formObjects.Add(submitForm);
+
+                    submitForm.transform.SetAsLastSibling();
+                    submitForm.GetComponentInChildren<Button>()?.onClick.AddListener(() => SubmitPage(submitForm));
+
+                    SetSubmitFormData(submitForm);
+                }
+            }
+        }
+
+        // Rebuilds the layout; fixes some weird autoscaling issues.
+        void Update()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponentInChildren<Transform>() as RectTransform);
+        }
+
+        // automatically update Submit button text
+        void SetSubmitFormData(SubmitForm submitForm)
+        {
+            if(surveyManager.Pages.IndexOf(this) < surveyManager.Pages.Count - 1)
+            {
+                submitForm.title.text = "Continue on the next Page..";
+                submitForm.buttonText.text = "Next Page";
+            }
+            else
+            {
+                submitForm.title.text = "Survey Complete!";
+                submitForm.buttonText.text = "Submit";
+            }
+        }
+
+        /// <summary>
+        /// Checks if the questions are filled in and goes to the nextpage
+        /// </summary>
+        /// <param name="submitForm"></param>
+        void SubmitPage(SubmitForm submitForm)
+        {
+            // update the form colors to their default
+            ResetFormColors();
+
+            // get all forms that are required
+            foreach (Question q in formObjects.OfType<Question>())
+            {
+                // skip non required questions
+                if (!q.GetData().required)
+                {
+                    continue;
+                }
+
+                inCompleteQuestions.AddRange(q.GetInCompletedForms());
             }
 
-            if (formData is InfoFormData)
+            // color them red
+            if (surveyManager.MustCompleteAllQuestions || inCompleteQuestions.Count != 0)
             {
-                InfoFormData ifd = formData as InfoFormData;
-                InfoForm infoForm = Instantiate(ifd.InfoFormPrefab, container).GetComponent<InfoForm>();
-                infoForm.SetData(ifd);
-                formObjects.Add(infoForm);
+                foreach (GameObject obj in inCompleteQuestions)
+                {
+                    inCompleteQuestionsDefaultColor.Add(obj.GetComponent<Image>().color);
+                    obj.GetComponent<Image>().color = new Color(0.8018868f, 0.1927287f, 0.1626469f, 0.7294118f);
+                }
+
+                submitForm.GetComponentInChildren<TextMeshProUGUI>().text = "Please fill in the remaining parts.";
+                return;
             }
 
-            if (formData is SubmitFormData)
+            surveyManager.GoNext(this);
+        }
+
+        private void ResetFormColors()
+        {
+            //remove red color from colored objects
+            for (int i = 0; i < inCompleteQuestions.Count; ++i)
             {
-                SubmitFormData sfd = formData as SubmitFormData;
-                SubmitForm submitForm = Instantiate(sfd.InfoFormPrefab, container).GetComponent<SubmitForm>();
-                formObjects.Add(submitForm);
-
-                submitForm.transform.SetAsLastSibling();
-                submitForm.GetComponentInChildren<Button>()?.onClick.AddListener(() => SubmitPage(submitForm));
-
-                SetSubmitFormData(submitForm);
-            }
-        }
-    }
-
-    // Rebuilds the layout; fixes some weird autoscaling issues.
-    void Update()
-    {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponentInChildren<Transform>() as RectTransform);
-    }
-
-    void SetSubmitFormData(SubmitForm submitForm)
-    {
-        if(surveyManager.Pages.IndexOf(this) < surveyManager.Pages.Count - 1)
-        {
-            submitForm.title.text = "Continue on the next Page..";
-            submitForm.buttonText.text = "Next Page";
-        }
-        else
-        {
-            submitForm.title.text = "Survey Complete!";
-            submitForm.buttonText.text = "Submit";
-        }
-    }
-
-    void SubmitPage(SubmitForm submitForm)
-    {
-        // update the form colors to their default
-        ResetFormColors();
-
-        // get all forms that are required
-        foreach (Question q in formObjects.OfType<Question>())
-        {
-            // skip non required questions
-            if (!q.GetData().required)
-            {
-                continue;
+                inCompleteQuestions[i].GetComponent<Image>().color = inCompleteQuestionsDefaultColor[i];
             }
 
-            inCompleteQuestions.AddRange(q.GetInCompletedForms());
+            inCompleteQuestions.Clear();
+            inCompleteQuestionsDefaultColor.Clear();
         }
-
-        // color them red
-        if (surveyManager.MustCompleteAllQuestions && inCompleteQuestions.Count != 0)
-        {
-            foreach (GameObject obj in inCompleteQuestions)
-            {
-                inCompleteQuestionsDefaultColor.Add(obj.GetComponent<Image>().color);
-                obj.GetComponent<Image>().color = new Color(0.8018868f, 0.1927287f, 0.1626469f, 0.7294118f);
-            }
-
-            submitForm.GetComponentInChildren<TextMeshProUGUI>().text = "Please fill in the remaining parts.";
-            return;
-        }
-
-        surveyManager.GoNextPage(this);
-    }
-
-    private void ResetFormColors()
-    {
-        //remove red color from colored objects
-        for (int i = 0; i < inCompleteQuestions.Count; ++i)
-        {
-            inCompleteQuestions[i].GetComponent<Image>().color = inCompleteQuestionsDefaultColor[i];
-        }
-
-        inCompleteQuestions.Clear();
-        inCompleteQuestionsDefaultColor.Clear();
     }
 }
