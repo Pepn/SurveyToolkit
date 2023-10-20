@@ -14,19 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InfoFormPrefab: {fileID: 1705304496291170024, guid: 0f00ad207c51564409942c82f9df3c0f, type: 3}
   title: Consent
-  info: 'You are being invited to participate in a research study.  The research
+  info: "You are being invited to participate in a research study.  The research
     is split into two parts, firstly you will play a game with a few different levels,
-    after which you will be asked to fill in a small questionnaire. This study is
-    being conducted by Pepijn Thijssens, for the graduation in Game and Media Technology
-    at University Utrecht.
-
-
-    The game and survey collect anonymous player data.
-    The stored data will only be used for research purposes. No one will be able
-    to identify you or your answers, and no one will know whether or not you participated
-    in the study.
-
-
-    Your participation in this study is voluntary. By playing
-    the game and completing the survey, you are voluntarily agreeing to participate,
-    and agree to these conditions.'
+    after which you will be asked to fill in a small questionnaire. \n\nThe game
+    and survey collect anonymous player data. The stored data will only be used for
+    research purposes. No one will be able to identify you or your answers, and no
+    one will know whether or not you participated in the study.\n\nYour participation
+    in this study is voluntary. By playing the game and completing the survey, you
+    are voluntarily agreeing to participate, and agree to these conditions."

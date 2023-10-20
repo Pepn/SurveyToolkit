@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a0d4351ea372754aa9a7c8c1bafe2dd, type: 3}
   m_Name: SubmitForm
   m_EditorClassIdentifier: 
-  InfoFormPrefab: {fileID: 3062197382715201189, guid: d93d2790f44618c4faed93a88ae47e75, type: 3}
-  title: Complete Form
-  buttonText: Next Page
+  InfoFormPrefab: {fileID: 2896254127095491181, guid: 11a37a4d70c3f76428ee47ee09ce28e7, type: 3}
