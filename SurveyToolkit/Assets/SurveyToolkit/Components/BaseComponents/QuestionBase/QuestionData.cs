@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public abstract class QuestionData : FormObjectData
+namespace SurveyToolkit
 {
-    [SerializeField] public GameObject QuestionPrefab;
-    public string question;
-    public bool required = true;
+    public abstract class QuestionData : FormObjectData
+    {
+        [SerializeField] public GameObject QuestionPrefab;
+        public string question;
+        public bool required = true;
+    }
 }

@@ -14,6 +14,13 @@ $csv_mimetypes = array(
 
 if ( isset($_FILES["dataFile"])) {
 
+	//check password
+	$auth = $_SERVER['HTTP_AUTH'];
+    if($auth != "XZ89O6RfnsxKFHxERJ3aKh2BDXrb0dKB"){
+        echo "Password Incorrect!";
+        return;
+    }
+	
 	//if there was an error uploading the file
 	if ($_FILES["dataFile"]["error"] > 0)
 		echo "Return Code: " . $_FILES["dataFile"]["error"] . "<br />";

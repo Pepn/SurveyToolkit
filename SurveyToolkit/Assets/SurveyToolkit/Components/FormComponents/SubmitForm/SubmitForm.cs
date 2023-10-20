@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SubmitForm : FormObject
+namespace SurveyToolkit
 {
-    [HideInInspector] public SubmitFormData Data;
-    [SerializeField] public TextMeshProUGUI title;
-    [SerializeField] public TextMeshProUGUI buttonText;
+    public class SubmitForm : FormObject
+    {
+        [HideInInspector] public SubmitFormData Data;
+        [SerializeField] public TextMeshProUGUI title;
+        [SerializeField] public TextMeshProUGUI buttonText;
 
-    public void SetData(SubmitFormData ifd) => Data = ifd;
+        public void SetData(SubmitFormData ifd) => Data = ifd;
+    }
 }

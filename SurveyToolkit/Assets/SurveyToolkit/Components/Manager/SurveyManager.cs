@@ -8,7 +8,6 @@ using System.IO;
 
 namespace SurveyToolkit
 {
-    [ExecuteAlways]
     public class SurveyManager : MonoBehaviour
     {
         public bool MustCompleteAllQuestions = false;
@@ -78,7 +77,7 @@ namespace SurveyToolkit
 
         private string SaveStringToFile()
         {
-            string filename = $"id_.csv";
+            string filename = $"id_{System.Guid.NewGuid()}_{DateTime.UtcNow.ToString("yyyy-dd-M--HH-mm-ss")}.csv";
             string path = Path.Combine(Application.persistentDataPath, filename);
             File.WriteAllText(path, ToCSV());
 
@@ -105,8 +104,8 @@ namespace SurveyToolkit
             {
                 results.Append($"{q.GetQuestion()},");
             }
-            //results.Append("\n");
-            results.Clear();
+            results.Append("\n");
+            //results.Clear();
             //datam
             results.Append($"{DateTime.Now},");
             foreach (Question q in formObjects.OfType<Question>())

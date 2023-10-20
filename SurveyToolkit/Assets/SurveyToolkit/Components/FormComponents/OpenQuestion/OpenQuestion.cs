@@ -4,45 +4,46 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class OpenQuestion : Question
+namespace SurveyToolkit
 {
-    private TMP_InputField answerField;
-
-    // Start is called before the first frame update
-    void Start()
+    public class OpenQuestion : Question
     {
-        questionObject.GetComponent<TextMeshProUGUI>().text = (GetData() as OpenQuestionData).question + this.AddRequiredOptionalStar; 
+        private TMP_InputField answerField;
 
-        answerField = GetComponentInChildren<TMP_InputField>();
-    }
-
-    //public override MultipleChoiceQuestionData GetData() => (MultipleChoiceQuestionData) base.GetData();
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public override string GetAnswer()
-    {
-        return answerField.text.Replace(',', '/');
-    }
-
-    public override string GetQuestion()
-    {
-        return GetData().question.Replace(',','/');
-    }
-
-    public override List<GameObject> GetInCompletedForms() 
-    {
-        List<GameObject> inCompleteObjects = new List<GameObject>();
-        if (GetAnswer() == "")
+        // Start is called before the first frame update
+        void Start()
         {
-            inCompleteObjects.Add(this.gameObject);
+            questionObject.GetComponent<TextMeshProUGUI>().text = (GetData() as OpenQuestionData).question + this.AddRequiredOptionalStar;
+
+            answerField = GetComponentInChildren<TMP_InputField>();
         }
-        return inCompleteObjects;
+
+        /// <summary>
+        /// Remove comma's as these mess up the csv file
+        /// </summary>
+        /// <returns></returns>
+        public override string GetAnswer()
+        {
+            return answerField.text.Replace(',', '/');
+        }
+
+        /// <summary>
+        /// Remove comma's as these mess up the csv file
+        /// </summary>
+        /// <returns></returns>
+        public override string GetQuestion()
+        {
+            return GetData().question.Replace(',', '/');
+        }
+
+        public override List<GameObject> GetInCompletedForms()
+        {
+            List<GameObject> inCompleteObjects = new List<GameObject>();
+            if (GetAnswer() == "")
+            {
+                inCompleteObjects.Add(this.gameObject);
+            }
+            return inCompleteObjects;
+        }
     }
-
-
 }

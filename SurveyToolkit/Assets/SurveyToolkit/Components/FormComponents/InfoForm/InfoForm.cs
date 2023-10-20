@@ -4,19 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class InfoForm : FormObject
+namespace SurveyToolkit
 {
-    [HideInInspector] public InfoFormData Data;
-    [SerializeField] private TextMeshProUGUI title;
-    [SerializeField] private TextMeshProUGUI info;
-
-    // Start is called before the first frame update
-    void Start()
+    public class InfoForm : FormObject
     {
-        title.text = Data.title;
-        info.text = Data.info;
+        [HideInInspector] public InfoFormData Data;
+        [SerializeField] private TextMeshProUGUI title;
+        [SerializeField] private TextMeshProUGUI info;
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            title.text = Data.title;
+            info.text = Data.info;
+        }
+
+        public void SetData(InfoFormData ifd) => Data = ifd;
+
     }
-
-    public void SetData(InfoFormData ifd) => Data = ifd;
-
 }

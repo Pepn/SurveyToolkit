@@ -3,51 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class MultipleChoiceQuestion : Question
-{
-    [SerializeField] protected GameObject optionPrefab;
- 
-    // Start is called before the first frame update
-    void Start()
-    {
-        questionObject.GetComponent<TextMeshProUGUI>().text = GetData().question + this.AddRequiredOptionalStar;
-        foreach (string answer in (GetData() as MultipleChoiceQuestionData).Answers)
-        {
-            GameObject optionObj = Instantiate(optionPrefab, answerObject.transform);
-            optionObj.GetComponentInChildren<Toggle>().group = answerObject.GetComponent<ToggleGroup>();
-            optionObj.GetComponentInChildren<TextMeshProUGUI>().text = answer;
-        }
-    }
 
-    public override string GetAnswer()
+namespace SurveyToolkit
+{
+    public class MultipleChoiceQuestion : Question
     {
-        string answer = "";
-        foreach(Toggle t in answerObject.GetComponentsInChildren<Toggle>())
+        [SerializeField] protected GameObject optionPrefab;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            if (t.isOn)
+            questionObject.GetComponent<TextMeshProUGUI>().text = GetData().question + this.AddRequiredOptionalStar;
+            foreach (string answer in (GetData() as MultipleChoiceQuestionData).Answers)
             {
-                answer += t.gameObject.GetComponentInChildren<TextMeshProUGUI>().text;
+                GameObject optionObj = Instantiate(optionPrefab, answerObject.transform);
+                optionObj.GetComponentInChildren<Toggle>().group = answerObject.GetComponent<ToggleGroup>();
+                optionObj.GetComponentInChildren<TextMeshProUGUI>().text = answer;
             }
         }
-        return answer;
-    }
 
-    public override string GetQuestion()
-    {
-        return GetData().question.Replace(',','/');
-    }
-
-    public override List<GameObject> GetInCompletedForms() 
-    {
-        List<GameObject> inCompleteObjects = new List<GameObject>();
-        if (GetAnswer() == "")
+        public override string GetAnswer()
         {
-            inCompleteObjects.Add(this.gameObject);
+            string answer = "";
+            foreach (Toggle t in answerObject.GetComponentsInChildren<Toggle>())
+            {
+                if (t.isOn)
+                {
+                    answer += t.gameObject.GetComponentInChildren<TextMeshProUGUI>().text;
+                }
+            }
+            return answer;
         }
-        return inCompleteObjects;
-    } 
 
-    //c#9.0 should be possible
-    //public override MultipleChoiceQuestionData GetData() => (MultipleChoiceQuestionData) base.GetData();
+        public override string GetQuestion()
+        {
+            return GetData().question.Replace(',', '/');
+        }
 
+        public override List<GameObject> GetInCompletedForms()
+        {
+            List<GameObject> inCompleteObjects = new List<GameObject>();
+            if (GetAnswer() == "")
+            {
+                inCompleteObjects.Add(this.gameObject);
+            }
+            return inCompleteObjects;
+        }
+    }
 }
