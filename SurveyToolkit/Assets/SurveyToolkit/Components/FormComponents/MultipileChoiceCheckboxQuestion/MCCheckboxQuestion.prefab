@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7408995275014121129, guid: 7c4c1755c5536e2439621b042844f483, type: 3}
       propertyPath: m_Name
-      value: MCQuestion
+      value: MCCheckboxQuestion
       objectReference: {fileID: 0}
     - target: {fileID: 7408995275014121130, guid: 7c4c1755c5536e2439621b042844f483, type: 3}
       propertyPath: m_Pivot.x
@@ -159,7 +159,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7408995275014121129, guid: 7c4c1755c5536e2439621b042844f483, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2951588786104557290}
+      addedObject: {fileID: 2225621842415184720}
   m_SourcePrefab: {fileID: 100100000, guid: 7c4c1755c5536e2439621b042844f483, type: 3}
 --- !u!1 &8228459365494202692 stripped
 GameObject:
@@ -176,7 +176,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7408995275014121129, guid: 7c4c1755c5536e2439621b042844f483, type: 3}
   m_PrefabInstance: {fileID: 1505140986895668679}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2951588786104557290
+--- !u!114 &2225621842415184720
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,9 +185,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8228459365897581422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dae5d810b950ea449d5449b0eff9a8e, type: 3}
+  m_Script: {fileID: 11500000, guid: d658f6fb70efac8458b9df28a9135915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   questionObject: {fileID: 8228459365494202692}
   answerObject: {fileID: 8228459365798789029}
-  optionPrefab: {fileID: 7211177739456393125, guid: e6baff26b02fa934d996046b6ed5f94f, type: 3}
+  optionPrefab: {fileID: 7211177739456393125, guid: bcc0d97e9e3554246bfd4f972fba9d34, type: 3}
