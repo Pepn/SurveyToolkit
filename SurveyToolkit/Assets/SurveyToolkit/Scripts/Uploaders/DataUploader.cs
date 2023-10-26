@@ -9,10 +9,12 @@ namespace SurveyToolkit
     /// <summary>
     /// Data uploader, takes a path to a file and tries to upload it to the uploadLink.
     /// </summary>
-    public class DataUploader : Singleton<DataUploader>
+    public class DataUploader : MonoBehaviour
     {
         [Tooltip("Full link to getFile.php")]
-        public string uploadLink;
+        [SerializeField] string uploadLink;
+
+        [SerializeField] private string uploadPassword = "XZ89O6RfnsxKFHxERJ3aKh2BDXrb0dKB";
 
         public void UploadFile(string file)
         {
@@ -29,7 +31,7 @@ namespace SurveyToolkit
             UnityWebRequest req = UnityWebRequest.Post(uploadLink, form);
 
             // set password (unsafe)
-            req.SetRequestHeader("AUTH", "XZ89O6RfnsxKFHxERJ3aKh2BDXrb0dKB");
+            req.SetRequestHeader("AUTH", uploadPassword);
 
             yield return req.SendWebRequest();
 

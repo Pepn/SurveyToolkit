@@ -10,15 +10,19 @@ namespace SurveyToolkit
 {
     public class SurveyManager : MonoBehaviour
     {
-        public bool MustCompleteAllQuestions = false;
-        [SerializeField] bool UploadToServer;
-        [SerializeField] string UploadLink;
+        // if true all questions are mandatory
+        [field: SerializeField] public bool MustCompleteAllQuestions { get; private set; } = false;
+
+        [SerializeField] bool uploadToServer;
 
         public List<QuestionnairePage> Pages { get; private set; }
+
+        private DataUploader uploader;
 
         // Start is called before the first frame update
         void Awake()
         {
+            uploader = GetComponent<DataUploader>();
             LoadSurvey();
         }
 
@@ -68,10 +72,16 @@ namespace SurveyToolkit
             //if correctly filled in
             string file = SaveStringToFile();
 
-            if (UploadToServer)
+            if (uploadToServer)
             {
-                DataUploader.Instance.uploadLink = UploadLink;
-                DataUploader.Instance.UploadFile(file);
+                if(uploader == null)
+                {
+                    Debug.LogError("No uploader found, make sure to add a DataUploader to this gameobject.");
+                }
+                else
+                {
+                    uploader.UploadFile(file);
+                }
             }
         }
 

@@ -70,7 +70,7 @@ namespace SurveyToolkit
             LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponentInChildren<Transform>() as RectTransform);
         }
 
-        // automatically update Submit button text
+        // automatically update Submit button text based on the number of pages left
         void SetSubmitFormData(SubmitForm submitForm)
         {
             if(surveyManager.Pages.IndexOf(this) < surveyManager.Pages.Count - 1)
