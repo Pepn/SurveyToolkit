@@ -95,7 +95,7 @@ namespace SurveyToolkit
         }
 
         /// <summary>
-        /// Converts the survey questions to a single row CSV file.
+        /// Converts the survey questions to a CSV file. One row for the questions, and the 2nd row for the results.
         /// </summary>
         /// <returns></returns>
         public string ToCSV()
