@@ -1,6 +1,13 @@
 # SurveyToolkit
+The QuestionnaireToolkit is a software tool designed for the creation of questionnaires, surveys, and straightforward user interface forms for applications across VR, Desktop, and Mobile.
 
-- The SurveyToolkit supports the follow question types: Open, Linear, Grid, and Multiple Choice.
+This tool offers a plug and play non-scripting solution to create beautiful questionnaires & surveys. Furthermore, it includes a straightforward instructional manual detailing the setup procedure for a basic backend system, which stands prepared for data collection online, if deemed necessary. Consequently, developers can allocate their efforts toward addressing other critical, application-specific functionalities.
+
+This toolkit uses default Unity UI and therefore supports VR.
+
+The SurveyToolkit supports the following question types: Open, Linear, Grid, Slider, Checkbox and Multiple Choice.
+
+The questions are created by instantiating ScriptableObjects in the editor. Easy formatting is possible by editing the prefabs which correspond to the question type. 
 
 ## Documentation
 The SurveyManager contains QuestionnairePages which handle most of the logic for each page. The pages contain a list of FormObjectData (ScriptableObjects) where a FormObjectData could either a question, a submit button or some infobox. Every question is a prefab variant of the original QuestionForm, if you want to change the layout change this prefab. The FormObjectData must have a reference to the prefab, this way the QuestionnairePage knows which and how to instantiate the prefab. The Survey is populated at runtime, so press play to inspect your survey.
