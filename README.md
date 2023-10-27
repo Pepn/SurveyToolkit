@@ -3,18 +3,15 @@ The SurveyToolkit is a software tool designed for plug-and-play generation of qu
 
 This tool offers a non-scripting solution to create beautiful questionnaires & surveys. Furthermore, it includes a straightforward instructional manual detailing the setup procedure for a basic backend system, which stands prepared for data collection online, if deemed necessary. Consequently, developers can allocate their efforts toward addressing other critical, application-specific functionalities.
 
-This toolkit uses default Unity UI and therefore supports VR.
-
 The SurveyToolkit supports the following question types: Open, Linear, Grid, Slider, Checkbox and Multiple Choice.
 
-The questions are created by instantiating ScriptableObjects in the editor. Easy formatting is possible by editing the prefabs which correspond to the question type. 
-
 ## Documentation
-The SurveyManager contains QuestionnairePages which handle most of the logic for each page. The pages contain a list of FormObjectData (ScriptableObjects) where a FormObjectData could either a question, a submit button or some infobox. Every question is a prefab variant of the original QuestionForm, if you want to change the layout change this prefab. The FormObjectData must have a reference to the prefab, this way the QuestionnairePage knows which and how to instantiate the prefab. The Survey is populated at runtime, so press play to inspect your survey.
+The SurveyManager contains QuestionnairePages which handle most of the logic for each page. The pages contain a list of FormObjectData (ScriptableObjects) where a FormObjectData could either a question, a submit button or some infobox. Every question is a prefab variant of the original QuestionForm, if you want to change the layout change this prefab. The FormObjectData must have a reference to the prefab, this way the QuestionnairePage knows which and how to instantiate the prefab. **The Survey is populated at runtime, so press play to inspect your survey.**
 To create new questions right click in the Project > Create > SurveyToolkit > QuestionType. Or just copy and edit the example questions.
+The final page should just be a infobox, the actual data is send on the final to last page.
 
 ## Example
-The SampleScene shows a simple 2 page survey
+The SampleScene shows a simple 2 page survey, see the questionnaire pages on the manager how it is setup.
 
 ## Data
 The data is stored as .csv files in the [persistant storage](https://docs.unity3d.com/ScriptReference/Application-persistentDataPath.html) of the device. It is also possible to upload the data to a server.
@@ -28,4 +25,4 @@ SurveyToolkit uses an C# WWW form to upload the recorded file to a server capeab
 - Copy the link to the getFile.php from the server, should be something like: [https://xxxxxx.000webhostapp.com/getFile.php](https://xxxxxx.000webhostapp.com/getFile.php).
 - In Unity select your SurveyManager object and paste it into the uploadLink variable & enable the uploadToServer checkbox.
 
-Remarks: This is not a very safe solution. While the getFile.php script has some tamper proofing it is not considered safe to allow unverified persons or scripts to upload on your server. Therefore, we recommend you to only host this script when actually collecting data.
+Remarks: This is not a very safe solution. While the getFile.php script uses a hardcoded password but this not considered very safe, additionally only text files are allowed but some loophole might exist; allowing file uploads to a server is very dangerous. Therefore, we recommend you to only host this script when actually collecting data.
