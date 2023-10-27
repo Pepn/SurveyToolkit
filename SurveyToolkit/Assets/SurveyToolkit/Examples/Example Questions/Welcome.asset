@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Welcome
   m_EditorClassIdentifier: 
   InfoFormPrefab: {fileID: 1705304496291170024, guid: fc16dceb861263c40954b02f2830211e, type: 3}
-  title: Welcome!
-  info: 'You are being invited to participate in a research study.  The research
-    is split into two parts, firstly you will play a game with a few different levels,
-    after which you will be asked to fill in a small questionnaire. The game and
-    survey collect anonymous player data. The stored data will only be used for research
-    purposes. No one will be able to identify you or your answers, and no one will
-    know whether or not you participated in the study.
+  title: Welcome to the SurveyToolkit!
+  info: 'SurveyToolkit offers a non-scripting solution to create beautiful questionnaires
+    & surveys. Furthermore, it includes a straightforward instructional manual detailing
+    the setup procedure for a free basic backend system, which enables online data
+    collection, if deemed necessary. The SurveyToolkit supports the following question
+    types: Open, Linear, Grid, Slider, Checkbox and Multiple Choice. Additionally,
+    creating new types is easy due to the Class structure & prefabs provided.
 
+    
 
-    Your participation in
-    this study is voluntary. By playing the game and completing the survey, you are
-    voluntarily agreeing to participate, and agree to these conditions.'
+    This
+    toolkit uses default Unity UI and therefore supports VR.'

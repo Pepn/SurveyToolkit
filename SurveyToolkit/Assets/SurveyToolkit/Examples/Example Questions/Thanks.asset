@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InfoFormPrefab: {fileID: 1705304496291170024, guid: 0f00ad207c51564409942c82f9df3c0f, type: 3}
   title: Thanks!
-  info: Thank you for participating! Your data will be stored after pressing the
-    submit button!
+  info: Thank you for participating! You can now close this window!

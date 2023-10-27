@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 namespace SurveyToolkit
 {
@@ -18,6 +19,8 @@ namespace SurveyToolkit
         private List<GameObject> inCompleteQuestions = new List<GameObject>();
         private List<Color> inCompleteQuestionsDefaultColor = new List<Color>();
 
+        public UnityEvent OnPageShow;
+
         private void Awake()
         {
             container = transform.GetChild(0).transform;
@@ -27,6 +30,7 @@ namespace SurveyToolkit
         void Start()
         {
             LoadPage();
+            OnPageShow?.Invoke();
         }
 
         // loads all the questions and instantiates the correct prefabs
@@ -73,7 +77,7 @@ namespace SurveyToolkit
         // automatically update Submit button text based on the number of pages left
         void SetSubmitFormData(SubmitForm submitForm)
         {
-            if(surveyManager.Pages.IndexOf(this) < surveyManager.Pages.Count - 1)
+            if(surveyManager.Pages.IndexOf(this) < surveyManager.Pages.Count - 2)
             {
                 submitForm.title.text = "Continue on the next Page..";
                 submitForm.buttonText.text = "Next Page";

@@ -61,7 +61,9 @@ namespace SurveyToolkit
                 page.gameObject.SetActive(false);
                 Pages[currentIndex + 1].gameObject.SetActive(true);
             }
-            else
+
+            // if last to one we submit everything (last page just shows information)
+            if (currentIndex < Pages.Count - 1)
             {
                 SubmitQuestionnaire();
             }
@@ -76,7 +78,7 @@ namespace SurveyToolkit
             {
                 if(uploader == null)
                 {
-                    Debug.LogError("No uploader found, make sure to add a DataUploader to this gameobject.");
+                    Debug.LogWarning("No uploader found, make sure to add a DataUploader to this gameobject.");
                 }
                 else
                 {
